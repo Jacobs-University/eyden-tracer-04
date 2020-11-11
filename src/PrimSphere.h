@@ -69,7 +69,7 @@ public:
 	    auto p = normalize(getNormal(ray));
         float longitude = atan2(p.val[2], p.val[0]); // this is the longitude value
         float latitude = acos(p.val[1]);
-        return Vec2f((longitude / Pi) * 0.5 + 0.5, 1 - (latitude / Pi));
+        return Vec2f((longitude / Pi) * 0.5 + 0.5, (latitude / Pi));
 	}
 
 	virtual CBoundingBox getBoundingBox(void) const override
