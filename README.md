@@ -35,7 +35,8 @@ Proceed as follows:
 6. Extend your code in ```CSolidSphere``` constructor in such a way that the triangles will be created with the additional normals. Calculate these normals (_e.g._ using the spherical coordinate system) and pass them within the triangles' and quads' constructors.
 7. Test your implementation on the scene from Problem 1. Compare the difference between the Solid and Primitive spheres. Explain below why smoothed cone looks strange. How would you fix it?
 
-**Explanation and Suggestion:** ...
+**Explanation and Suggestion:**
+For the top vertex, we would take quads but since it is not in this code, it chooses a triangle. The smoothed cone was actually not completely smooth and even when I added in the height segment from the sample code, it was a bit bumpy. This might be because there are some areas of the original cone that are already smoothed but are then smoothed again. By adding the bool "smooth" in it as in the sample code, we would check for this case. 
 
 If everything is correct your images should look like this:  
 
