@@ -75,7 +75,9 @@ public:
 		ray.t = f;
 		ray.hit = shared_from_this();
 		// --- PUT YOUR CODE HERE ---
-
+		//Store the computed barycentric coordinates into Ray::u and Ray::v
+		ray.u = lambda;
+		ray.v = mue;
 		return true;
 	}
 
@@ -83,16 +85,28 @@ public:
 	{
 		if (m_na && m_nb && m_nc) {
 			// --- PUT YOUR CODE HERE ---
-			return Vec3f(0, 0, 0);
+			/*Problem 2.4: Check whether the vertex normals are initialized and if yes, 
+			use the u/v coordinates of the hitpoint to interpolate between the vertex normals 
+			and return interpolated normal
+			This code is taken from: https://stackoverflow.com/questions/38717963/best-way-to-interpolate-triangle-surface-using-3-positions-and-normals-for-ray-t
+			but instead of u and v, we have u.ray and v.ray
+			*/
+			Vec3f r0 = m_na.value();
+			Vec3f r1 = m_nb.value();
+			Vec3f r2 = m_nc.value();
+			Vec3f intnorm = ((1.0f - ray.u - ray.v) * r0 + ray.u * r1 + ray.v * r2);
+			return intnorm;
 		}
-		else 
+		else {
 			return normalize(m_edge1.cross(m_edge2));
+		}
 	}
 
 	virtual Vec2f getTextureCoords(const Ray& ray) const override
 	{
 		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
+		return(1.0f - ray.u - ray.v) * m_ta + ray.u * m_tb + ray.v * m_tc;
+		//return Vec2f(0, 0);
 	}
 
 	virtual CBoundingBox getBoundingBox(void) const override
