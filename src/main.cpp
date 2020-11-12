@@ -23,12 +23,14 @@ Mat RenderFrame(void)
 {
 	// Camera resolution
 	const Size resolution(1200, 600);
-	
+
 	// Define a scene
 	CScene scene;
 
 	// Add camera to scene
 	auto pCamera = std::make_shared<CCameraPerspective>(resolution, Vec3f(0, 0, -30.0f), Vec3f(0, 0, 1), Vec3f(0, 1, 0), 30);
+	//auto pCamera = std::make_shared<CCameraPerspective>(resolution, Vec3f(0, 10, 45.0f), Vec3f(0, 0, -1), Vec3f(0, 1, 0), 30); //camera angle for barney
+
 
 #ifdef WIN32
 	const std::string dataPath = "../data/";
@@ -38,23 +40,31 @@ Mat RenderFrame(void)
 
 	// Texture
 	Mat earth = imread(dataPath + "1_earth_8k.jpg");
+	Mat bar = imread(dataPath + "barney.bmp"); //barney texture material
 	if (earth.empty()) printf("ERROR: Texture file is not found!\n");
 	auto pTexture = std::make_shared<CTexture>(earth);
+	auto bTexture = std::make_shared<CTexture>(bar); //barney texture
 
 	// Shaders
-	auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
+	auto pShader = std::make_shared<CShaderEyelight>(pTexture);
+	auto bShader = std::make_shared<CShaderEyelight>(bTexture);
 
 	// Geometry
 	CSolidCone solid_cone(pShader, Vec3f(10, -4, 0), 4, 8);
 	CSolidSphere solid_sphere(pShader, Vec3f(0, 0, 0), 4, 36);
 	auto prim_sphere = std::make_shared<CPrimSphere>(pShader, Vec3f(-10, 0, 0), 4);
 
+	CSolid solid(bShader, dataPath + "barney.obj");
+
 	// Add everything to the scene
 	scene.add(pCamera);
+	
 	scene.add(solid_cone);
 	scene.add(solid_sphere);
 	scene.add(prim_sphere);
 
+
+	//scene.add(solid);
 	// Build BSPTree
 	scene.buildAccelStructure(20, 3);
 
@@ -78,6 +88,6 @@ int main(int argc, char* argv[])
 	DirectGraphicalModels::Timer::stop();
 	imshow("Image", img);
 	waitKey();
-	imwrite("image.jpg", img);
+	imwrite("image3.jpg", img);
 	return 0;
 }
