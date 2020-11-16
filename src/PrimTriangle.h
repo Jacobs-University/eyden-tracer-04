@@ -75,7 +75,8 @@ public:
 		ray.t = f;
 		ray.hit = shared_from_this();
 		// --- PUT YOUR CODE HERE ---
-
+        ray.u = lambda;
+        ray.v = mue;
 		return true;
 	}
 
@@ -83,7 +84,14 @@ public:
 	{
 		if (m_na && m_nb && m_nc) {
 			// --- PUT YOUR CODE HERE ---
-			return Vec3f(0, 0, 0);
+            
+            //This is to get normal of Prim Triangle
+            //Please note that this code was taken from the internet
+            Vec3f r0 = m_na.value();
+            Vec3f r1 = m_nb.value();
+            Vec3f r2 = m_nc.value();
+            Vec3f intnorm = ((1.0f - ray.u - ray.v) * r0 + ray.u * r1 + ray.v * r2);
+            return intnorm;
 		}
 		else 
 			return normalize(m_edge1.cross(m_edge2));
@@ -92,7 +100,8 @@ public:
 	virtual Vec2f getTextureCoords(const Ray& ray) const override
 	{
 		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
+        return (1.0f - ray.u - ray.v) * m_ta + ray.u * m_tb + ray.v * m_tc;
+        
 	}
 
 	virtual CBoundingBox getBoundingBox(void) const override

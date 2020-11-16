@@ -29,6 +29,9 @@ Mat RenderFrame(void)
 
 	// Add camera to scene
 	auto pCamera = std::make_shared<CCameraPerspective>(resolution, Vec3f(0, 0, -30.0f), Vec3f(0, 0, 1), Vec3f(0, 1, 0), 30);
+    
+    //Barney Camera Angle:
+    //auto pCamera = std::make_shared<CCameraPerspective>(resolution, Vec3f(0, 10, 45.0f), Vec3f(0, 0, -1), Vec3f(0, 1, 0), 30);
 
 #ifdef WIN32
 	const std::string dataPath = "../data/";
@@ -38,8 +41,12 @@ Mat RenderFrame(void)
 
 	// Texture
 	Mat earth = imread(dataPath + "1_earth_8k.jpg");
+    //Barney Texture:
+    Mat bar = imread(dataPath + "barney.bmp");
 	if (earth.empty()) printf("ERROR: Texture file is not found!\n");
 	auto pTexture = std::make_shared<CTexture>(earth);
+    //Barney Texture:
+    auto bTexture = std::make_shared<CTexture>(bar);
 
 	// Shaders
 	auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
