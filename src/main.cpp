@@ -8,7 +8,7 @@
 #include "Solid.h"
 #include "SolidQuad.h"
 #include "SolidCone.h"
-#include "SolidSphere.h"
+#include "SolidGeoSphere.h"
 
 #include "ShaderFlat.h"
 #include "ShaderEyelight.h"
@@ -46,7 +46,7 @@ Mat RenderFrame(void)
 
 	// Geometry
 	CSolidCone solid_cone(pShader, Vec3f(10, -4, 0), 4, 8);
-	CSolidSphere solid_sphere(pShader, Vec3f(0, 0, 0), 4, 36);
+	CSolidGeoSphere solid_sphere(pShader, Vec3f(0, 0, 0), 4, 36);
 	auto prim_sphere = std::make_shared<CPrimSphere>(pShader, Vec3f(-10, 0, 0), 4);
 
 	// Add everything to the scene
