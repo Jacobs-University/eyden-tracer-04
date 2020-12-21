@@ -8,7 +8,7 @@
 #include "Solid.h"
 #include "SolidQuad.h"
 #include "SolidCone.h"
-#include "SolidGeoSphere.h"
+#include "SolidGeosphere.h"
 
 #include "ShaderFlat.h"
 #include "ShaderEyelight.h"
