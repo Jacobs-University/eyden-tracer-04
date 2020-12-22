@@ -33,7 +33,7 @@ Mat RenderFrame(void)
 #ifdef WIN32
 	const std::string dataPath = "../data/";
 #else
-	const std::string dataPath = "../../data/";
+	const std::string dataPath = "C:\Users\checi\source\repos\eyden-tracer-04-master\data";
 #endif
 
 	// Texture
@@ -42,14 +42,14 @@ Mat RenderFrame(void)
 	auto pTexture = std::make_shared<CTexture>(earth);
 
 	// Shaders
-	auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
-	//auto pShader = std::make_shared<CShaderEyelight>(RGB(1, 1, 1));
-	//auto pShader = std::make_shared<CShaderEyelight>(pTexture);
+	//auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
+	auto pShader = std::make_shared<CShaderEyelight>(RGB(1, 1, 1));
+	auto pShader1 = std::make_shared<CShaderEyelight>(pTexture);
 
 	// Geometry
 	CSolidCone solid_cone(pShader, Vec3f(10, -4, 0), 4, 8);
 	CSolidSphere solid_sphere(pShader, Vec3f(0, 0, 0), 4, 36);
-	auto prim_sphere = std::make_shared<CPrimSphere>(pShader, Vec3f(-10, 0, 0), 4);
+	auto prim_sphere = std::make_shared<CPrimSphere>(pShader1, Vec3f(-10, 0, 0), 4);
 
 	// Add everything to the scene
 	scene.add(pCamera);
