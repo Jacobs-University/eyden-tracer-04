@@ -51,6 +51,7 @@ Mat RenderFrame(void)
 	CSolidCone solid_cone(pShader, Vec3f(10, -4, 0), 4, 8);
 	CSolidSphere solid_sphere(pShader, Vec3f(0, 0, 0), 4, 36);
 	auto prim_sphere = std::make_shared<CPrimSphere>(pShader1, Vec3f(-10, 0, 0), 4);
+	//CSolidGeosphere solid_geosphere(pShader, Vec3f(0, 0, 0), 4, 36);
 
 	// Add everything to the scene
 	scene.add(pCamera);
