@@ -26,7 +26,10 @@ public:
 	{
 		if (m_pTexture) {
 			// --- PUT YOUR CODE HERE ---
-			return Vec3f(1, 1, 1);
+			//return Vec3f(1, 1, 1);
+			
+			Vec2f uv = ray.hit->getTextureCoords(ray);
+			return m_pTexture->getTexel(uv);
 		}
 		else 
 			return m_color;

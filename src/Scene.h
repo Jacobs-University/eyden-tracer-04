@@ -133,11 +133,13 @@ public:
 		return intersect(ray) ? ray.hit->getShader()->shade(ray) : m_bgColor;
 	}
 
+public:
+	std::vector<ptr_light_t>	m_vpLights;				///< lights   //eliza
 
 private:
 	Vec3f						m_bgColor;    			///< background color
 	std::vector<ptr_prim_t> 	m_vpPrims;				///< primitives
-	std::vector<ptr_light_t>	m_vpLights;				///< lights
+	
 	std::vector<ptr_camera_t>	m_vpCameras;			///< Cameras
 	size_t						m_activeCamera = 0;	//< The index of the active camera
 #ifdef ENABLE_BSP		

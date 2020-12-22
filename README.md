@@ -1,8 +1,13 @@
 # Practical Assignment 4
-**Dealine**: 12.11.2020
+**Dealine**: 22.12.2020
 
 Please put your name here:  
-**Name:** .......
+**Name:** Checiu Eliza and Abumansur Sabyrrakhim (we disccused and worked together on certain tasks, although we both wrote and compilied our own codes)
+
+GeoSphere:  I tried to write the code for it and used any resource I found but in the end it didn't really work on and so I did the normal sphere and worked on it for the assignment.
+
+BONUS: I took the example given last year to run it and make it work. I tried to modified everything needed to make it work.
+
 ## Problem 1
 ### Sphere Solid (Points 25)
 In this assignment we will continue working with _compound objects_: solids. 
@@ -35,7 +40,7 @@ Proceed as follows:
 6. Extend your code in ```CSolidSphere``` constructor in such a way that the triangles will be created with the additional normals. Calculate these normals (_e.g._ using the spherical coordinate system) and pass them within the triangles' and quads' constructors.
 7. Test your implementation on the scene from Problem 1. Compare the difference between the Solid and Primitive spheres. Explain below why smoothed cone looks strange. How would you fix it?
 
-**Explanation and Suggestion:** ...
+**Explanation and Suggestion:** From my understanding, you can only assign one normal to the top vertex per triangle, which therefore means that there is not possible way to have smooth transition. To make it better though, I found that the method of multiple hight segments could work.
 
 If everything is correct your images should look like this:  
 
