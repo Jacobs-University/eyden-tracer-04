@@ -23,7 +23,7 @@ Mat RenderFrame(void)
 {
 	// Camera resolution
 	const Size resolution(1200, 600);
-	
+
 	// Define a scene
 	CScene scene;
 
@@ -42,17 +42,37 @@ Mat RenderFrame(void)
 	auto pTexture = std::make_shared<CTexture>(earth);
 
 	// Shaders
-	auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
+	//auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
+    auto pShader = std::make_shared<CShaderEyelight>(pTexture);
 
-	// Geometry
+    /* bonus task shader */
+//     auto shd1 = std::make_shared<CShaderPhong>(scene, RGB(1, 0, 0), 0.1f, 0.5f, 0.5f, 40); // red surface
+//     auto shd2 = std::make_shared<CShaderPhong>(scene, RGB(1, 1, 0), 0.1f, 0.5f, 0.5f, 40); // yellow surface
+//
+//     auto shd3 = std::make_shared<CShaderPhong>(scene, RGB(0, 1, 1), 0.1f, 0.5f, 0.5f, 40); // cyan surface
+//     auto shd4 = std::make_shared<CShaderPhong>(scene, RGB(0, 0, 1), 0.1f, 0.5f, 0.5f, 40); // blue surface
+//
+//     scene.add(std::make_shared<CPrimSphere>(shd1, Vec3f(-2, 1.7f, 0), 2));
+//     scene.add(std::make_shared<CPrimSphere>(shd3, Vec3f(1, -1, 1), 2.2f));
+//     scene.add(std::make_shared<CPrimSphere>(shd4, Vec3f(3, 0.8f, -2), 2));
+//     scene.add(std::make_shared<CPrimPlane>(shd2, Vec3f(0, -1, 0), Vec3f(0, 1, 0)));
+//
+//     Vec3f pointLightIntensity(7, 7, 7);
+//     Vec3f lightPosition2(-3, 5, 4);
+//     Vec3f lightPosition3(0, 1, 4);
+//
+//     scene.add(std::make_shared<CLightOmni>(pointLightIntensity, lightPosition2));
+//     scene.add(std::make_shared<CLightOmni>(pointLightIntensity, lightPosition3));
+
+    // Geometry
 	CSolidCone solid_cone(pShader, Vec3f(10, -4, 0), 4, 8);
-	CSolidGeosphere solid_geosphere(1.0f, 36, 18);
+	CSolidGeosphere solid_sphere(1.0f, 36, 18);
 	auto prim_sphere = std::make_shared<CPrimSphere>(pShader, Vec3f(-10, 0, 0), 4);
 
 	// Add everything to the scene
 	scene.add(pCamera);
 	scene.add(solid_cone);
-	scene.add(solid_geosphere);
+	scene.add(solid_sphere);
 	scene.add(prim_sphere);
 
 	// Build BSPTree

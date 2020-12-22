@@ -2,6 +2,8 @@
 
 #include "ShaderFlat.h"
 
+const int nAreaSamples = 1;
+
 class CShaderPhong : public CShaderFlat
 {
 public:
@@ -26,8 +28,16 @@ public:
 
 	virtual Vec3f shade(const Ray& ray) const override
 	{
+	    // Phong Shader with bump mapping procedure
+	    Vec3f dPdu = (1, 0, 0);
+	    Vec3f dPdv = (0, 1, 0);
+	    Vec3f h = ray.org + ray.dir * ray.t;
+	    float deltaU = 0.5f * cos(3 * h[0] * sin(h[2]));
+	    float deltaV = 0.5f * sin(13 * h[2]);
+
 		// get shading normal
 		Vec3f normal = ray.hit->getNormal(ray);
+		Vec3f normal1 = normalize(normal + deltaU * dPdu + deltaV * dPdv);
 
 		// turn normal to front
 		if (normal.dot(ray.dir) > 0)
@@ -48,27 +58,36 @@ public:
 		shadow.org = ray.org + ray.t * ray.dir;
 
 		// iterate over all light sources
-		for (auto pLight : m_scene.getLights()) {
+		for (auto pLight : m_scene.m_vpLights) {
 			// get direction to light, and intensity
-			std::optional<Vec3f> lightIntensity = pLight->illuminate(shadow);
-			if (lightIntensity) {
-				// diffuse term
-				float cosLightNormal = shadow.dir.dot(normal);
-				if (cosLightNormal > 0) {
-					if (m_scene.occluded(shadow))
-						continue;
+			for(int i = 0; i < nAreaSamples; i++) {
+                std::optional<Vec3f> lightIntensity = pLight->illuminate(shadow);
 
-					Vec3f diffuseColor = m_kd * color;
-					res += (diffuseColor * cosLightNormal).mul(lightIntensity.value());
-				}
+                if (lightIntensity) {
+                    // diffuse term
+                    float cosLightNormal = shadow.dir.dot(normal);
+                    if (cosLightNormal > 0) {
+                        if (m_scene.occluded(shadow))
+                            continue;
 
-				// specular term
-				float cosLightReflect = shadow.dir.dot(reflect);
-				if (cosLightReflect > 0) {
-					Vec3f specularColor = m_ks * RGB(1, 1, 1); // white highlight;
-					res += (specularColor * powf(cosLightReflect, m_ke)).mul(lightIntensity.value());
-				}
+                        Vec3f diffuseColor = m_kd * color;
+                        res += (diffuseColor * cosLightNormal).mul(lightIntensity.value());
+                    }
+
+                    // specular term
+                    float cosLightReflect = shadow.dir.dot(reflect);
+                    if (cosLightReflect > 0) {
+                        Vec3f specularColor = m_ks * RGB(1, 1, 1); // white highlight;
+                        res += (specularColor * powf(cosLightReflect, m_ke)).mul(lightIntensity.value());
+                    }
+                }
 			}
+
+
+		}
+
+		if(nAreaSamples > 1) {
+            res /= nAreaSamples;
 		}
 
 		for (int i = 0; i < 3; i++)

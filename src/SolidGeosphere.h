@@ -114,4 +114,3 @@ private:
     std :: vector<unsigned int> indices;
     std :: vector<unsigned int> lineIndices;
 };
-
