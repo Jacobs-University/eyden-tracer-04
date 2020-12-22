@@ -59,6 +59,28 @@ Mat RenderFrame(void)
 	scene.add(solid_sphere);
 	scene.add(prim_sphere);
 
+	// --- Scene description for bonus task only ---
+
+	 //auto shd1 = std::make_shared<CShaderPhongBumpMapped>(scene, RGB(1, 0, 0), 0.1f, 0.5f, 0.5f, 40); // red surface
+	 //auto shd2 = std::make_shared<CShaderPhongBumpMapped>(scene, RGB(1, 1, 0), 0.1f, 0.5f, 0.5f, 40); // yellow surface
+
+	 //auto shd3 = std::make_shared<CShaderPhong>(scene, RGB(0, 1, 1), 0.1f, 0.5f, 0.5f, 40); // cyan surface
+	 //auto shd4 = std::make_shared<CShaderPhong>(scene, RGB(0, 0, 1), 0.1f, 0.5f, 0.5f, 40); // blue surface
+
+	 //scene.add(std::make_shared<CPrimSphere>(shd1, Vec3f(-2, 1.7f, 0), 2));
+	 //scene.add(std::make_shared<CPrimSphere>(shd3, Vec3f(1, -1, 1), 2.2f));
+	 //scene.add(std::make_shared<CPrimSphere>(shd4, Vec3f(3, 0.8f, -2), 2));
+	 //scene.add(std::make_shared<CPrimPlane>(shd2, Vec3f(0, -1, 0), Vec3f(0, 1, 0)));
+
+	 //Vec3f pointLightIntensity(7, 7, 7);
+	 //Vec3f lightPosition2(-3, 5, 4);
+	 //Vec3f lightPosition3(0, 1, 4);
+
+	 //scene.add(std::make_shared<CLightOmni>(pointLightIntensity, lightPosition2));
+	 //scene.add(std::make_shared<CLightOmni>(pointLightIntensity, lightPosition3));
+
+	// --- End description for bonus task ---
+	
 	// Build BSPTree
 	scene.buildAccelStructure(20, 3);
 
