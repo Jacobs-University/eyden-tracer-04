@@ -1,6 +1,12 @@
 #pragma once
 
 #include "SolidQuad.h"
+#include "PrimTriangle.h"
+#include "PrimSphere.h"
+#include "PrimSphere.h"
+#include "PrimPlane.h"
+#include "PrimPlane.h"
+
 
 class CSolidSphere : public CSolid
 {
@@ -8,74 +14,89 @@ public:
 	CSolidSphere(ptr_shader_t pShader, const Vec3f& origin = Vec3f::all(0), float radius = 1, size_t sides = 24)
 	{
 		// --- PUT YOUR CODE HERE ---
-		
-		size_t height_segments = sides / 2;
-		float x = 2 * Pif / sides;
-		float y = Pif / height_segments;
-		float z = 0;
-		float w = 0;
+        //taken from the OpenRT github
+        size_t height_segments = (sides / 2);
+        float t0 = 0;								            // Initial texture coordinate
+        float phi0 = 0;
+        for (size_t s = 0; s < sides; s++) {
+            float t1 = static_cast<float>(s + 1) / sides;       // Next texture coordinate: [1/sides; 1]
+            float phi1 = -2 * Pif * t1;
 
-		for (size_t s = 0; s < sides; s++) {
-			for (size_t h = 0; h < height_segments; h++) {
-				if (h == 0) {
-					Vec3f p0 = origin + Vec3f(0, radius, 0);
-					Vec3f p1 = origin + Vec3f(radius * sinf(y) * cosf(z), radius * cosf(y), radius * sinf(y) * sinf(z));
-					Vec3f p2 = origin + Vec3f(radius * sinf(y) * cosf(z + x), radius * cosf(y), radius * sinf(y) * sinf(z + x));
-					Vec3f np1 = normalize(p1 - origin);
-					Vec3f np2 = normalize(p2 - origin);
-					//Vec2f textp1 = getTextureCoords(p1 - origin, radius);
-					//Vec2f textp2 = getTextureCoords(p2 - origin, radius);
-					//Vec2f textp0 = Vec2f((textp1.val[0] + textp2.val[0]) / 2, 0);
+            float h0 = 0.0f / height_segments;					// Initial height
+            float theta0 = Pif * (h0 - 0.5f);
 
-					//first triangle constructor version from problem 1: 
-					add(std::make_shared<CPrimTriangle>(pShader, p0, p1, p2));
+            Vec3f n00(cosf(theta0) * cosf(phi0), sinf(theta0), cosf(theta0) * sinf(phi0));
 
-					//extended triangle constructor from problem 2
-					//add(std::make_shared<CPrimTriangle>(pShader, p0, p1, p2, normalize(np1 + np2), np1, np2));
+            Vec3f n10(cosf(theta0) * cosf(phi1), sinf(theta0), cosf(theta0) * sinf(phi1));
 
-					//extended triangle constructor from problem 3
-					//add(std::make_shared<CPrimTriangle>(pShader,p0,p1,p2,textp0,textp1,textp2,normalize(np1+np2),np1,np2));
-				}
-				else if (h == height_segments - 1) {
-					Vec3f p0 = origin + Vec3f(0, -radius, 0);
-					Vec3f p1 = origin + Vec3f(radius * sinf(Pif - y) * cosf(z), radius * sinf(Pif - y) * sinf(z), radius * cosf(Pif - y));
-					Vec3f p2 = origin + Vec3f(radius * sinf(Pif - y) * cosf(z + x), radius * cosf(Pif - y), radius * sinf(Pif - y) * sinf(z + x));
-					Vec3f n1 = normalize(p1 - origin);
-					Vec3f n2 = normalize(p2 - origin);
-					//Vec2f textp1 = getTextureCoords(p1 - origin, radius);
-					//Vec2f textp2 = getTextureCoords(p2 - origin, radius);
-					//Vec2f textp0 = Vec2f((textp1.val[0] + textp2.val[0]) / 2, 1);
+            bool smooth = true;
+            //changing this depending on the task.
 
-					//first triangle constructor version from problem 1:
-					add(std::make_shared<CPrimTriangle>(pShader, p0, p1, p2));
-					//extended triangle constructor from problem 2
-					//add(std::make_shared<CPrimTriangle>(pShader, p0, p1, p2, normalize(np1 + np2), np1, np2));
-					//constructor for the texture problem
-					//add(std::make_shared<CPrimTriangle>(pShader, p0, p1, p2, textp0, textp1, textp2, normalize(np1 + np2), np1, np2)); 
-				}
-				else {
-					Vec3f p0 = origin + Vec3f(radius * sinf(w) * cosf(z), radius * cosf(w), radius * sinf(w) * sinf(z));
-					Vec3f p1 = origin + Vec3f(radius * sinf(w + y) * cosf(z), radius * cosf(w + y), radius * sinf(w + y) * sinf(z));
-					Vec3f p2 = origin + Vec3f(radius * sinf(w + y) * cosf(z + x), radius * cosf(w + y), radius * sinf(w + y) * sinf(z + x));
-					Vec3f p3 = origin + Vec3f(radius * sinf(w) * cosf(z + x), radius * cosf(w), radius * sinf(w) * sinf(z + x));
+            for (size_t h = 0; h < height_segments; h++) {
+                float h1 = static_cast<float>(h + 1) / height_segments;		// Next height: [1/height_segments; 1]
+                float theta1 = Pif * (h1 - 0.5f);
 
-					//Vec2f textp0 = getTextureCoords(p0 - origin, radius);
-					//Vec2f textp1 = getTextureCoords(p1 - origin, radius);
-					//Vec2f textp2 = getTextureCoords(p2 - origin, radius);
-					//Vec2f uv3 = getTextureCoords(p3 - origin, radius);
-					//add(std::make_shared<CSolidQuad>(pShader, p0, p1, p2, p3, textp0, textp1, textp2, uv3, normalize(p0 - origin), normalize(P1 - origin), normalize(P2 - origin), normalize(P3 - origin)));
+                Vec3f n01(cosf(theta1) * cosf(phi0), sinf(theta1), cosf(theta1) * sinf(phi0));
 
-					//first quad constructor version from problem 1:
-					add(std::make_shared<CSolidQuad>(pShader, p0, p1, p2, p3));
-					//extended quad constructor from problem 2
-					//add(std::make_shared<CSolidQuad>(pShader, p0, p1, p2, p3, normalize(p0 - origin), normalize(p1 - origin), normalize(p2 - origin), normalize(p3 - origin)));
-					//extended quad constructor from problem 3
-					//add(std::make_shared<CSolidQuad>(pShader, p0, p1, p2, p3, normalize(p0 - origin), normalize(p1 - origin), normalize(p2 - origin), normalize(p3 - origin)));
-				}
-				w += y;
-			}
-			z += x;
-		}
+                Vec3f n11(cosf(theta1) * cosf(phi1), sinf(theta1), cosf(theta1) * sinf(phi1));
+
+                if (h == 0) { // ----- Bottom cap: triangles -----
+                    if (smooth)
+                        add(std::make_shared<CPrimTriangle>(pShader,
+                            origin + n00 * radius,
+                            origin + n11 * radius,
+                            origin + n01 * radius,
+                            Vec2f(t0, 1 - h0), Vec2f(t1, 1 - h1), Vec2f(t0, 1 - h1),
+                            n00, n11, n01));
+                    else
+                        add(std::make_shared<CPrimTriangle>(pShader,
+                            origin + n00 * radius,
+                            origin + n11 * radius,
+                            origin + n01 * radius,
+                            Vec2f(t0, 1 - h0), Vec2f(t1, 1 - h1), Vec2f(t0, 1 - h1)));
+                }
+                else if (h == height_segments - 1) { // ----- Top cap: triangles -----
+                    if (smooth)
+                        add(std::make_shared<CPrimTriangle>(pShader,
+                            origin + n00 * radius,
+                            origin + n10 * radius,
+                            origin + n11 * radius,
+                            Vec2f(t0, 1 - h0), Vec2f(t1, 1 - h0), Vec2f(t1, 1 - h1),
+                            n00, n10, n11));
+                    else
+                        add(std::make_shared<CPrimTriangle>(pShader,
+                            origin + n00 * radius,
+                            origin + n10 * radius,
+                            origin + n11 * radius,
+                            Vec2f(t0, 1 - h0), Vec2f(t1, 1 - h0), Vec2f(t1, 1 - h1)));
+                }
+                else { // ----- Sides: quads -----
+                    if (smooth)
+                        add(std::make_shared<CSolidQuad>(pShader,
+                            origin + n00 * radius,
+                            origin + n10 * radius,
+                            origin + n11 * radius,
+                            origin + n01 * radius,
+                            Vec2f(t0, 1 - h0), Vec2f(t1, 1 - h0), Vec2f(t1, 1 - h1), Vec2f(t0, 1 - h1),
+                            n00, n10, n11, n01));
+                    else
+                        add(std::make_shared<CSolidQuad>(pShader,
+                            origin + n00 * radius,
+                            origin + n10 * radius,
+                            origin + n11 * radius,
+                            origin + n01 * radius,
+                            Vec2f(t0, 1 - h0), Vec2f(t1, 1 - h0), Vec2f(t1, 1 - h1), Vec2f(t0, 1 - h1)));
+                }
+                h0 = h1;
+                theta0 = theta1;
+                n00 = n01;
+                n10 = n11;
+            } // h
+            t0 = t1;
+            phi0 = phi1;
+        } // s
+
+
 	}
 	virtual ~CSolidSphere(void) = default;
 };
