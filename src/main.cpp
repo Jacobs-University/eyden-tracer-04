@@ -43,6 +43,7 @@ Mat RenderFrame(void)
 
 	// Shaders
 	auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
+	//auto pShader = std::make_shared<CShaderEyelight>(pTexture);
 
 	// Geometry
 	CSolidCone solid_cone(pShader, Vec3f(10, -4, 0), 4, 8);
