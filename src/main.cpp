@@ -9,6 +9,7 @@
 #include "SolidQuad.h"
 #include "SolidCone.h"
 #include "SolidSphere.h"
+#include "SolidGeosphere.h"
 
 #include "ShaderFlat.h"
 #include "ShaderEyelight.h"
