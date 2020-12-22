@@ -43,6 +43,7 @@ Mat RenderFrame(void)
 
 	// Shaders
 	auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
+	//auto pShader = std::make_shared<CShaderEyelight>(RGB(1, 1, 1));
 	//auto pShader = std::make_shared<CShaderEyelight>(pTexture);
 
 	// Geometry
