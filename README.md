@@ -1,8 +1,12 @@
 # Practical Assignment 4
-**Dealine**: 12.11.2020
+**Dealine**: 22.12.2020
 
 Please put your name here:  
-**Name:** Checiu Eliza
+**Name:** Checiu Eliza and Abumansur Sabyrrakhim (we disccused and worked together on certain tasks, although we both wrote and compilied our own codes)
+
+GeoSphere:  I tried to write the code for it and used any resource I found but in the end it didn't really work on and so I did the normal sphere and worked on it for the assignment.
+
+BONUS: I took the example given last year to run it and make it work. I tried to modified everything needed to make it work.
 
 ## Problem 1
 ### Sphere Solid (Points 25)
