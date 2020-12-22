@@ -36,7 +36,7 @@ Proceed as follows:
 6. Extend your code in ```CSolidSphere``` constructor in such a way that the triangles will be created with the additional normals. Calculate these normals (_e.g._ using the spherical coordinate system) and pass them within the triangles' and quads' constructors.
 7. Test your implementation on the scene from Problem 1. Compare the difference between the Solid and Primitive spheres. Explain below why smoothed cone looks strange. How would you fix it?
 
-**Explanation and Suggestion:** ...
+**Explanation and Suggestion:** From my understanding, you can only assign one normal to the top vertex per triangle, which therefore means that there is not possible way to have smooth transition. To make it better though, I found that the method of multiple hight segments could work.
 
 If everything is correct your images should look like this:  
 
