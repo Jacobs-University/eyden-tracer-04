@@ -14,6 +14,7 @@
 #include "ShaderFlat.h"
 #include "ShaderEyelight.h"
 #include "ShaderPhong.h"
+#include "ShaderPhongBumpMapped.h"
 
 #include "Texture.h"
 
