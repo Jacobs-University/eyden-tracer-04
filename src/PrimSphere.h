@@ -69,17 +69,13 @@ public:
 		// --- PUT YOUR CODE HERE ---
 		//return Vec2f(0, 0);
 		
-		Vec3f hitPoint = (ray.org + (ray.t * ray.dir)) - m_origin;
-		float x = hitPoint.val[0];
-		float y = hitPoint.val[2];
-		float z = hitPoint.val[1];
-		float pwr1 = atan2(y, x);
-		float theta = acosf(z / m_radius);
-		if (isnan(pwr1)) {
-			pwr1 = 0;
-		}
-		return Vec2f((Pif + pwr1) / (2 * Pif), theta / Pif);
+		Vec3f hitPoint = ray.org + ray.dir * ray.t - m_origin;
+		float theta = acosf(hitPoint.val[1] / m_radius);	// [0; Pif]
 
+		float phi = sinf(theta) > Epsilon ? acosf(hitPoint.val[0] / (m_radius * sinf(theta))) : 0;	// [0; Pif]
+		if (hitPoint.val[2] < 0) phi = -phi;															// [-Pif; Pif]
+		if (isnan(phi)) phi = 0;
+		return Vec2f(-0.5f * (1 + phi / Pif), theta / Pif);
 	}
 
 	virtual CBoundingBox getBoundingBox(void) const override
