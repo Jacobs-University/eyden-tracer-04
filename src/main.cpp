@@ -33,7 +33,7 @@ Mat RenderFrame(void)
 #ifdef WIN32
 	const std::string dataPath = "../data/";
 #else
-	const std::string dataPath = "../../data/";
+	const std::string dataPath = "../data/";
 #endif
 
 	// Texture
@@ -42,7 +42,7 @@ Mat RenderFrame(void)
 	auto pTexture = std::make_shared<CTexture>(earth);
 
 	// Shaders
-	auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
+	auto pShader = std::make_shared<CShaderEyelight>(pTexture);
 
 	// Geometry
 	CSolidCone solid_cone(pShader, Vec3f(10, -4, 0), 4, 8);

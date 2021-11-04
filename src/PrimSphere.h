@@ -66,8 +66,9 @@ public:
 
 	virtual Vec2f getTextureCoords(const Ray& ray) const override
 	{
-		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
+		Vec3f intersect = (ray.org + ray.t*ray.dir) - m_origin;
+		return Vec2f(	atan2f(intersect[0], intersect[2])/(2*Pif),
+						acosf(MIN(intersect[1], m_radius)/m_radius)/Pif);
 	}
 
 	virtual CBoundingBox getBoundingBox(void) const override
