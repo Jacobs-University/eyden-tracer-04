@@ -9,7 +9,7 @@ public:
 	{
 		const Vec3f top = origin + Vec3f(0, radius, 0);		//the top point
 		const Vec3f bottom = origin - Vec3f(0, radius, 0);	//the bottom point
-		int sliceHeight = static_cast<int>(sides)/2 - 1;
+		const int sliceHeight = static_cast<int>(sides)/2 - 1;
 		
 		//initial slices points and normals
 		Vec3f dir;
@@ -24,7 +24,6 @@ public:
 			n0[i] = (p0[i] - origin)/radius;
 			t0[i] = Vec2f(0, static_cast<float>(i+1)/(sides/2));
 		}
-			std::cout << t0[0][0] << std::endl;
 		
 		//loop for each vertical slice
 		Vec3f p1[sliceHeight];									//next slices points
