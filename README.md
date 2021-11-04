@@ -2,7 +2,7 @@
 **Dealine**: 04.11.2021
 
 Please put your name here:  
-**Name:** .......
+**Name:** Jackson Whiteley
 ## Problem 1
 ### Sphere Solid (Points 25)
 In this assignment we will continue working with _compound objects_: solids. 

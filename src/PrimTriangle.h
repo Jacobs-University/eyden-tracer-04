@@ -74,7 +74,8 @@ public:
 
 		ray.t = f;
 		ray.hit = shared_from_this();
-		// --- PUT YOUR CODE HERE ---
+		ray.u = lambda;
+		ray.v = mue;
 
 		return true;
 	}
@@ -82,8 +83,7 @@ public:
 	virtual Vec3f getNormal(const Ray& ray) const override
 	{
 		if (m_na && m_nb && m_nc) {
-			// --- PUT YOUR CODE HERE ---
-			return Vec3f(0, 0, 0);
+			return normalize((1-ray.u-ray.v)*m_na.value() + ray.u*m_nb.value() + ray.v*m_nc.value());
 		}
 		else 
 			return normalize(m_edge1.cross(m_edge2));
@@ -91,8 +91,7 @@ public:
 
 	virtual Vec2f getTextureCoords(const Ray& ray) const override
 	{
-		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
+		return (1-ray.u-ray.v)*m_ta + ray.u*m_tb + ray.v*m_tc;
 	}
 
 	virtual CBoundingBox getBoundingBox(void) const override
