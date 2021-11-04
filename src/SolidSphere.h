@@ -9,7 +9,7 @@ public:
 	{
 		const Vec3f top = origin + Vec3f(0, radius, 0);		//the top point
 		const Vec3f bottom = origin - Vec3f(0, radius, 0);	//the bottom point
-		size_t sliceHeight = static_cast<int>(sides)/2 - 1;
+		int sliceHeight = static_cast<int>(sides)/2 - 1;
 		
 		//initial slices points and normals
 		Vec3f dir;
