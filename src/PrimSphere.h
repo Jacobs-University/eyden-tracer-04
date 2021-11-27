@@ -66,8 +66,10 @@ public:
 
 	virtual Vec2f getTextureCoords(const Ray& ray) const override
 	{
-		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
+	    auto p = normalize(getNormal(ray));
+        float longitude = atan2(p.val[2], p.val[0]); // this is the longitude value
+        float latitude = acos(p.val[1]);
+        return Vec2f((longitude / Pi) * 0.5 + 0.5, (latitude / Pi));
 	}
 
 	virtual CBoundingBox getBoundingBox(void) const override

@@ -2,7 +2,7 @@
 **Dealine**: 04.11.2021
 
 Please put your name here:  
-**Name:** .......
+**Name:** Otmane Sabir
 ## Problem 1
 ### Sphere Solid (Points 25)
 In this assignment we will continue working with _compound objects_: solids. 
@@ -36,6 +36,9 @@ Proceed as follows:
 7. Test your implementation on the scene from Problem 1. Compare the difference between the Solid and Primitive spheres. Explain below why smoothed cone looks strange. How would you fix it?
 
 **Explanation and Suggestion:** ...
+The smoothed cone result doesn't look the same for me but I believe it's because of how I compute the tip normal. I think that in the screenshot the tip is always facing upwards (in the direction of the cone)
+while for me I recompute it to "spin" around the cone each time. I generally just average the two bottom normals them add the height to them which approximately lands on the tip.
+My approach makes the smoothing a little more obvious especially when we start getting closer to the tip but this can be countered by increasing the number of sides we use. 
 
 If everything is correct your images should look like this:  
 
