@@ -83,7 +83,11 @@ public:
 	{
 		if (m_na && m_nb && m_nc) {
 			// --- PUT YOUR CODE HERE ---
-			return Vec3f(0, 0, 0);
+            Vec3f r0 = m_na.value();
+			Vec3f r1 = m_nb.value();
+			Vec3f r2 = m_nc.value();
+			Vec3f norm_ = ((1.0f - ray.u - ray.v) * r0 + ray.u * r1 + ray.v * r2);
+			return norm_;
 		}
 		else 
 			return normalize(m_edge1.cross(m_edge2));
