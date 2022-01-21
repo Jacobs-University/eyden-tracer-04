@@ -2,7 +2,7 @@
 **Dealine**: 04.11.2021
 
 Please put your name here:  
-**Name:** .......
+**Name:** Shahin Mammadov
 ## Problem 1
 ### Sphere Solid (Points 25)
 In this assignment we will continue working with _compound objects_: solids. 
@@ -35,7 +35,7 @@ Proceed as follows:
 6. Extend your code in ```CSolidSphere``` constructor in such a way that the triangles will be created with the additional normals. Calculate these normals (_e.g._ using the spherical coordinate system) and pass them within the triangles' and quads' constructors.
 7. Test your implementation on the scene from Problem 1. Compare the difference between the Solid and Primitive spheres. Explain below why smoothed cone looks strange. How would you fix it?
 
-**Explanation and Suggestion:** ...
+**Explanation and Suggestion:** Reason is that each side only has 1 normal because of the triangles, so the center of the side has much more clearer shading effect than at the top. We need to use more triangles to subdivide the sides to get clearer shading.
 
 If everything is correct your images should look like this:  
 
