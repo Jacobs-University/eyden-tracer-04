@@ -3,7 +3,7 @@
 #pragma once
 
 #include "IPrim.h"
-
+#include "ray.h"
 // ================================ Infinite Plane Primitive Class ================================
 /**
  * @brief The Plane Geometrical Primitive class
@@ -43,6 +43,32 @@ public:
 
 	virtual Vec2f getTextureCoords(const Ray& ray) const override
 	{
+	/*	Copied from OpenRT but it did not really work
+	Vec3f mu;
+		for (int i = 0; i < 3; i++)
+			if (fabs(m_normal.val[i]) >= 1.0f / sqrtf(3)) {
+				mu.val[i] = 0;
+				int mind, maxd;
+				if (fabs(m_normal.val[(i + 1) % 3]) > fabs(m_normal.val[(i + 2) % 3])) {
+					maxd = (i + 1) % 3;
+					mind = (i + 2) % 3;
+				}
+				else {
+					maxd = (i + 2) % 3;
+					mind = (i + 1) % 3;
+				}
+				mu.val[mind] = 1;
+				mu.val[maxd] = fabs(m_normal.val[maxd]) > Epsilon ? -m_normal.val[mind] / m_normal.val[maxd] : 0;
+				break;
+			}
+		mu = normalize(mu);
+		Vec3f mv = normalize(m_normal.cross(mu));
+		Vec3f hp = ray.org + ray.dir * ray.t;
+		Vec3f hit = hp;
+		Vec3f h = hit - m_origin;
+		Vec2f res = norm(h) > Epsilon ? Vec2f(h.dot(mu), h.dot(mv)) : Vec2f(0, 0);
+
+		return res;*/
 		return Vec2f(0, 0);
 	}
 

@@ -1,8 +1,8 @@
 # Practical Assignment 4
 **Dealine**: 04.11.2021
 
-Please put your name here:  
-**Name:** .......
+ 
+**Name:** Katrin von Seggern & Jordan Streete
 ## Problem 1
 ### Sphere Solid (Points 25)
 In this assignment we will continue working with _compound objects_: solids. 
@@ -35,7 +35,8 @@ Proceed as follows:
 6. Extend your code in ```CSolidSphere``` constructor in such a way that the triangles will be created with the additional normals. Calculate these normals (_e.g._ using the spherical coordinate system) and pass them within the triangles' and quads' constructors.
 7. Test your implementation on the scene from Problem 1. Compare the difference between the Solid and Primitive spheres. Explain below why smoothed cone looks strange. How would you fix it?
 
-**Explanation and Suggestion:** ...
+**Explanation and Suggestion:**
+For the top vertex, we would take quads but since it is not in this code, it chooses a triangle. The smoothed cone was actually not completely smooth and even when we added in the height segment from the sample code, it was a bit bumpy. This might be because there are some areas of the original cone that are already smoothed but are then smoothed again. By adding the bool "smooth" in it as in the sample code, we would check for this case. 
 
 If everything is correct your images should look like this:  
 
@@ -76,6 +77,10 @@ Using the expieriense gained so far, add to the scene Barney and apply his textu
 
 Test your implementation on barney.obj with barney.bmp. If everything is correct your image should look like this:
 ![barney](./doc/barney.jpg)
+
+We could not get the textures quite correct (except for the one on Barney). The PrimSphere's texture looks closest to what we wanted it but it's a little distorted and the cone's and solid sphere's textures look way off. This is probably because we did not get the getTextureCoords function to work in the SolidSphere.h.
+The constructors for the texture coordinates are commented out but still there.
+We attached a folder with two renders because we forgot to save the intermediate renders. We also did not get the camera to focus on Barney. 
 
 ## Submission
 Please submit the assignment by making a pull request.
