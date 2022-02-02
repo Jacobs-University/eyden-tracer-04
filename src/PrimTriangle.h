@@ -46,6 +46,9 @@ public:
 
 	virtual bool intersect(Ray& ray) const override
 	{
+		
+		
+		
 		const Vec3f edge1 = m_b - m_a;
 		const Vec3f edge2 = m_c - m_a;
 
@@ -73,8 +76,11 @@ public:
 		if (ray.t <= f || f < Epsilon) return false;
 
 		ray.t = f;
-		ray.hit = shared_from_this();
 		// --- PUT YOUR CODE HERE ---
+		//store the computed barycentric coordinates
+		ray.u = lambda;
+		ray.v = mue;
+		ray.hit = shared_from_this();
 
 		return true;
 	}
@@ -83,7 +89,11 @@ public:
 	{
 		if (m_na && m_nb && m_nc) {
 			// --- PUT YOUR CODE HERE ---
-			return Vec3f(0, 0, 0);
+			Vec3f norm = (1.0f - ray.u - ray.v) * m_na.value() + 
+				ray.u * m_nb.value() + 
+				ray.v * m_nc.value();
+			//return Vec3f(0, 0, 0);
+			return norm;
 		}
 		else 
 			return normalize(m_edge1.cross(m_edge2));
@@ -92,7 +102,11 @@ public:
 	virtual Vec2f getTextureCoords(const Ray& ray) const override
 	{
 		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
+		Vec2f coord = (1.0f - ray.u - ray.v) * m_ta + 
+			ray.u * m_tb + 
+			ray.v * m_tc;
+		//return Vec2f(0, 0);
+		return coord;
 	}
 
 	virtual CBoundingBox getBoundingBox(void) const override
