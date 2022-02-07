@@ -36,6 +36,7 @@ Proceed as follows:
 7. Test your implementation on the scene from Problem 1. Compare the difference between the Solid and Primitive spheres. Explain below why smoothed cone looks strange. How would you fix it?
 
 **Explanation and Suggestion:** ...
+In our implementation we use only one triangle on each side, which brings us to better shading effect on the center of the cone and less accurate shading on the top of the cone. This can be solved by adding more triangles.
 
 If everything is correct your images should look like this:  
 

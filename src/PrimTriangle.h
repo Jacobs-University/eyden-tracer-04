@@ -75,35 +75,43 @@ public:
 		ray.t = f;
 		ray.hit = shared_from_this();
 		// --- PUT YOUR CODE HERE ---
+        std::optional<Vec3f> t = Vec3f(f , lambda, mue);
+        ray.t = t.value().val[0];   //hit distance
+        ray.u = t.value().val[1];   //u barycentric coordinate
+        ray.v = t.value().val[2];      //V barycentric coordinate
+        ray.hit = shared_from_this();   //primitive intersected
 
-		return true;
-	}
+        return true;
+    }
 
-	virtual Vec3f getNormal(const Ray& ray) const override
-	{
-		if (m_na && m_nb && m_nc) {
-			// --- PUT YOUR CODE HERE ---
-			return Vec3f(0, 0, 0);
-		}
-		else 
-			return normalize(m_edge1.cross(m_edge2));
-	}
+    virtual Vec3f getNormal(const Ray& ray) const override
+    {
+        if (m_na && m_nb && m_nc) {
+            // --- PUT YOUR CODE HERE ---
+            Vec3f normal = (1.0f - ray.u - ray.v) * m_na.value() + ray.u * m_nb.value() + ray.v * m_nc.value();
+            return normalize(normal);
+            // return Vec3f(0, 0, 0);
+        }
+        else
+            return normalize(m_edge1.cross(m_edge2));
+        }
 
-	virtual Vec2f getTextureCoords(const Ray& ray) const override
-	{
-		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
-	}
 
-	virtual CBoundingBox getBoundingBox(void) const override
-	{
-		CBoundingBox res;
-		res.extend(m_a);
-		res.extend(m_b);
-		res.extend(m_c);
-		return res;
-	}
+    virtual Vec2f getTextureCoords(const Ray& ray) const override
+    {
+        // --- PUT YOUR CODE HERE ---
+        return (1-ray.u-ray.v)*m_ta + ray.u*m_tb + ray.v*m_tc;
+        
+    }
 
+    virtual CBoundingBox getBoundingBox(void) const override
+    {
+        CBoundingBox res;
+        res.extend(m_a);
+        res.extend(m_b);
+        res.extend(m_c);
+        return res;
+    }
 
 private:
 	Vec3f m_a;						///< Position of the first vertex
