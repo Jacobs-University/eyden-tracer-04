@@ -66,9 +66,19 @@ public:
 
 	virtual Vec2f getTextureCoords(const Ray& ray) const override
 	{
-		// --- PUT YOUR CODE HERE ---
-		return Vec2f(0, 0);
-	}
+        Vec3f hitPoint = (ray.org + (ray.t * ray.dir)) - m_origin;
+        //taken from slides
+        float x= hitPoint.val[0];
+        float y= hitPoint.val[2];
+        float z= hitPoint.val[1];
+        float phi = atan2(y, x);
+        float theta = acosf(z / m_radius);
+        if (isnan(phi)) {
+            phi = 0;
+        }
+        return Vec2f((Pif + phi) / (2 * Pif), theta / Pif);
+
+    }
 
 	virtual CBoundingBox getBoundingBox(void) const override
 	{

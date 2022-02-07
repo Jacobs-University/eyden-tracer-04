@@ -24,13 +24,20 @@ public:
 
 	virtual Vec3f shade(const Ray& ray) const override
 	{
-		if (m_pTexture) {
-			// --- PUT YOUR CODE HERE ---
-			return Vec3f(1, 1, 1);
-		}
-		else 
-			return m_color;
-	}
+        if (m_pTexture) {
+            // --- PUT YOUR CODE HERE ---
+            if (m_pTexture) {
+                // --- PUT YOUR CODE HERE ---
+                Vec2f uv = ray.hit->getTextureCoords(ray);
+                //return Vec3f(1, 1, 1);
+                return m_pTexture->getTexel(uv);
+            }
+            else
+                return m_color;
+        }
+        else
+            return m_color;
+    }
 
 private:
 	Vec3f m_color;
