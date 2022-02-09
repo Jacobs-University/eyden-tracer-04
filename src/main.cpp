@@ -37,9 +37,9 @@ Mat RenderFrame(void)
 #endif
 
 	// Texture
-	Mat earth = imread(dataPath + "1_earth_8k.jpg");
+	/*Mat earth = imread(dataPath + "1_earth_8k.jpg");
 	if (earth.empty()) printf("ERROR: Texture file is not found!\n");
-	auto pTexture = std::make_shared<CTexture>(earth);
+	auto pTexture = std::make_shared<CTexture>(earth);*/
 
 	// Shaders
 	auto pShader = std::make_shared<CShaderEyelight>(RGB(0.5f, 1, 0));
@@ -78,6 +78,6 @@ int main(int argc, char* argv[])
 	DirectGraphicalModels::Timer::stop();
 	imshow("Image", img);
 	waitKey();
-	imwrite("image.jpg", img);
+	imwrite("Image.jpg", img);
 	return 0;
 }
