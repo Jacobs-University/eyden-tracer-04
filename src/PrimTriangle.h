@@ -75,18 +75,24 @@ public:
 		ray.t = f;
 		ray.hit = shared_from_this();
 		// --- PUT YOUR CODE HERE ---
-
+		//ray.t = t.value().val[0];
+		ray.u = lambda;
+		ray.v = mue;
 		return true;
 	}
 
 	virtual Vec3f getNormal(const Ray& ray) const override
 	{
+		/*In Vec3f CPrimTriangle::getNormal(const Ray& ray) const check whether the vertex normals are initialized 
+		and if yes, use the u/v coordinates of the hitpoint to interpolate between the vertex normals and return interpolated normal. */
 		if (m_na && m_nb && m_nc) {
-			// --- PUT YOUR CODE HERE ---
-			return Vec3f(0, 0, 0);
+			//return (1.0f - ray.u - ray.v) * m_na.value() + ray.u * m_nb.value() + ray.v * m_nc.value();
+			return normalize((1.0f - ray.u - ray.v) * m_na.value() + ray.u * m_nb.value() + ray.v * m_nc.value());
+			//return normalize();
+			//std::cout << m_na.value() << " " << m_nb.value() << " " << m_nc.value() << std::endl;
 		}
-		else 
-			return normalize(m_edge1.cross(m_edge2));
+		 
+		return normalize(m_edge1.cross(m_edge2));
 	}
 
 	virtual Vec2f getTextureCoords(const Ray& ray) const override

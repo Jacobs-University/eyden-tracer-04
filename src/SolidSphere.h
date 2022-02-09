@@ -7,7 +7,7 @@ class CSolidSphere : public CSolid
 public:
 	CSolidSphere(ptr_shader_t pShader, const Vec3f& origin = Vec3f::all(0), float radius = 1, size_t sides = 24)
 	{
-		// --- PUT YOUR CODE HERE ---
+		//// --- PUT YOUR CODE HERE ---
 		int TempSize = sides;
 		auto r = radius;
 		//int n = 5;
@@ -28,14 +28,22 @@ public:
 				Vec3f TempOri(TempX, TempY, TempZ);
 				TempOri = TempOri + origin;
 				QuadVectors.push_back(TempOri);
-				std::cout << TempOri.val[0] << " " << TempOri.val[1] << " " << TempOri.val[2] << " " << std::endl;
+				//std::cout << TempOri.val[0] << " " << TempOri.val[1] << " " << TempOri.val[2] << " " << std::endl;
 				//CPrimSphere();
 				//add(std::make_shared<CPrimSphere>(pShader, TempOri, 0.05f));
 			}
 			if (HeightCounter == 1) {
 				//up cap
 				for (int i = 0; i <= TempSize; i++) {
-					add(std::make_shared<CPrimTriangle>(pShader, QuadVectors[0], QuadVectors[TempSize + i], QuadVectors[TempSize + i + 1]));
+					//calculating normal
+					add(std::make_shared<CPrimTriangle>(pShader, 
+						QuadVectors[0], 
+						QuadVectors[TempSize + i], 
+						QuadVectors[TempSize + i + 1],
+						Vec2f(0, 0), Vec2f(0, 0), Vec2f(0, 0),
+						QuadVectors[0] - origin, 
+						QuadVectors[TempSize + i] - origin,
+						QuadVectors[TempSize + i + 1] - origin));
 				}
 			}
 			else if(HeightCounter == TempSize) {
@@ -45,8 +53,17 @@ public:
 					auto Location1 = QuadVectors[QuadVectors.size() - 1];
 					auto Location2 = QuadVectors[TempCounter + i];
 					auto Location3 = QuadVectors[TempCounter + i + 1];
-					std::cout << Location1 << " " << Location2 << " " << Location3 << " " << std::endl;
-					add(std::make_shared<CPrimTriangle>(pShader, QuadVectors[QuadVectors.size() - 1], QuadVectors[TempCounter + i], QuadVectors[TempCounter + i + 1]));
+					//calculating normal
+					auto Norm1 = Location1 - origin;
+					auto Norm2 = Location2 - origin;
+					auto Norm3 = Location3 - origin;
+					//std::cout << Location1 << " " << Location2 << " " << Location3 << " " << std::endl;
+					add(std::make_shared<CPrimTriangle>(pShader, 
+						QuadVectors[QuadVectors.size() - 1], 
+						QuadVectors[TempCounter + i], 
+						QuadVectors[TempCounter + i + 1],
+						Vec2f(0,0), Vec2f(0,0), Vec2f(0,0),
+						Norm1, Norm2, Norm3));
 				}
 			}
 			else {
@@ -63,10 +80,30 @@ public:
 					}
 					for (int i = 0; i < TempSize; i++) {
 						if (i != 0) {
-							add(std::make_shared<CSolidQuad>(pShader, UppererLocationVector[i], LowerLocationVector[i - 1], LowerLocationVector[i], UppererLocationVector[i + 1]));
+							auto Norm1 = UppererLocationVector[i] - origin;
+							auto Norm2 = UppererLocationVector[i - 1] - origin;
+							auto Norm3 = LowerLocationVector[i] - origin;
+							auto Norm4 = LowerLocationVector[i + 1] - origin;
+							add(std::make_shared<CSolidQuad>(pShader, 
+								UppererLocationVector[i], 
+								LowerLocationVector[i - 1], 
+								LowerLocationVector[i], 
+								UppererLocationVector[i + 1],
+								Vec2f(0, 0), Vec2f(0, 0), Vec2f(0, 0), Vec2f(0,0),
+								Norm1, Norm2, Norm3));
 						}
 						else {
-							add(std::make_shared<CSolidQuad>(pShader, UppererLocationVector[0], LowerLocationVector[TempSize], LowerLocationVector[0], UppererLocationVector[1]));
+							auto Norm1 = UppererLocationVector[0] - origin;
+							auto Norm2 = LowerLocationVector[TempSize] - origin;
+							auto Norm3 = LowerLocationVector[0] - origin;
+							auto Norm4 = UppererLocationVector[1] - origin; 
+							add(std::make_shared<CSolidQuad>(pShader, 
+								UppererLocationVector[0], 
+								LowerLocationVector[TempSize], 
+								LowerLocationVector[0], 
+								UppererLocationVector[1],
+								Vec2f(0,0), Vec2f(0, 0), Vec2f(0, 0), Vec2f(0, 0),
+								Norm1, Norm2, Norm3, Norm4));
 						}
 						//add(std::make_shared<CSolidQuad>(pShader, UppererLocationVector[i], LowerLocationVector[i - 1], LowerLocationVector[i], UppererLocationVector[i + 1]));
 					}
@@ -95,9 +132,6 @@ public:
 			HeightCounter++;
 		}
 		std::cout << "total index " << QuadVectors.size() << std::endl;
-		/*add(std::make_shared<CPrimTriangle>(pShader, QuadVectors[1], QuadVectors[20], QuadVectors[30]));
-
-		add(std::make_shared<CPrimTriangle>(pShader, QuadVectors[100], QuadVectors[200], QuadVectors[300]));*/
 
 	}
 
